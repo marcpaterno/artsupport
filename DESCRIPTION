@@ -1,9 +1,16 @@
 Package: artsupport
-Title: What the Package Does (one line, title case)
+Title: Analysis of _art_ Program Performance Data
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.3.2)
-License: What license is it under?
+Authors@R: person("Marc", "Paterno", email = "paterno@fnal.gov", role = c("aut", "cre"))
+Description: The _art_ framework's _TimeTracker_ service can write
+    an SQLite database containing event-by-event and module-by-module
+    execution times. The _artsupport_ package provides functions to
+    enable (and I hope make easy) analysis of these data.
+Depends:
+    R (>= 3.3.2),
+    dplyr,
+    RSQLite
+License: LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 5.0.1
