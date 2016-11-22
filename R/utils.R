@@ -25,7 +25,7 @@ load_module_timing <- function(filename, lbl) {
 #' Make a box-and-whisker plot of module times from a timing dataframe.
 #'
 #' @param data The dataframe to plot
-#' @return a lattice object, as fron bwplot
+#' @return a lattice object, as from bwplot
 #' @export
 module_bwplot <- function(data, maxLables = NULL, ...) {
   lattice::bwplot(
