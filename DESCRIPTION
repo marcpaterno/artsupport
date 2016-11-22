@@ -1,14 +1,15 @@
 Package: artsupport
-Title: Analysis of _art_ Program Performance Data
+Title: Analysis of art Program Performance Data
 Version: 0.0.0.9000
 Authors@R: person("Marc", "Paterno", email = "paterno@fnal.gov", role = c("aut", "cre"))
-Description: The _art_ framework's _TimeTracker_ service can write
+Description: The art framework's TimeTracker service can write
     an SQLite database containing event-by-event and module-by-module
-    execution times. The _artsupport_ package provides functions to
+    execution times. The artsupport package provides functions to
     enable (and I hope make easy) analysis of these data.
 Depends:
     R (>= 3.3.2),
     dplyr,
+    tidyr,
     RSQLite
 License: LICENSE
 Encoding: UTF-8
