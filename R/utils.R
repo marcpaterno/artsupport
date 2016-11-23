@@ -27,7 +27,7 @@ load_module_timing <- function(filename, lbl) {
 #' @param data The dataframe to plot
 #' @return a lattice object, as from bwplot
 #' @export
-module_bwplot <- function(data, maxLables = NULL, ...) {
+module_bwplot <- function(data,  ...) {
   lattice::bwplot(
     reorder(ModuleLabel, Time) ~ Time | lbl,
     data = data,
