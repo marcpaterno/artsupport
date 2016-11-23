@@ -16,10 +16,10 @@
 #' d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 #' d3 = rbind(d1, d2)
 load_module_timing <- function(filename, lbl) {
-  dplyr::src_sqlite(filename) %>%
-    dplyr::tbl("TimeModule") %>%
-    dplyr::tbl_df %>%
-    cbind(lbl)
+  src_sqlite(filename) %>%
+  tbl("TimeModule") %>%
+  tbl_df %>%
+  cbind(lbl)
 }
 
 #' Make a box-and-whisker plot of module times from a timing dataframe.
