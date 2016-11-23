@@ -7,7 +7,7 @@ Description: The art framework's TimeTracker service can write
     execution times. The artsupport package provides functions to
     enable (and I hope make easy) analysis of these data.
 Depends:
-    R (>= 3.3.2),
+    R (>= 3.3.0),
     dplyr,
     tidyr,
     RSQLite
