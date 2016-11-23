@@ -25,9 +25,19 @@ load_module_timing <- function(filename, lbl) {
 #' Make a box-and-whisker plot of module times from a timing dataframe.
 #'
 #' @param data The dataframe to plot
+#' @param maxmodule Plot only the top maxmodules entries from each label
+#'
 #' @return a lattice object, as from bwplot
 #' @export
-module_bwplot <- function(data,  ...) {
+module_bwplot <- function(data, maxmodules = NULL, ...) {
+  if (! is.null(maxmodules)) {
+    interesting <- data %>% group_by(lbl,ModuleLabel) %>%
+      summarize(t=median(Time)) %>%
+      top_n(maxmodules) %>%
+      getElement("ModuleLabel") %>%
+      unique
+    data <- subset(data, ModuleLabel %in% interesting)
+  }
   lattice::bwplot(
     reorder(ModuleLabel, Time) ~ Time | lbl,
     data = data,
