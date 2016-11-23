@@ -4,13 +4,13 @@
 \alias{module_bwplot}
 \title{Make a box-and-whisker plot of module times from a timing dataframe.}
 \usage{
-module_bwplot(data, maxLables = NULL, ...)
+module_bwplot(data, ...)
 }
 \arguments{
 \item{data}{The dataframe to plot}
 }
 \value{
-a lattice object, as fron bwplot
+a lattice object, as from bwplot
 }
 \description{
 Make a box-and-whisker plot of module times from a timing dataframe.

@@ -7,7 +7,7 @@
 load_module_timing(filename, lbl)
 }
 \arguments{
-\item{filename}{The name of the _TimeTracker_ database file to open.}
+\item{filename}{The name of the \emph{TimeTracker} database file to open.}
 
 \item{lbl}{The label to be applied to each row in the dataframe.}
 }
@@ -15,11 +15,11 @@ load_module_timing(filename, lbl)
 a dataframe
 }
 \description{
-Open the specified _TimeTracker_ database file, and read the
+Open the specified \emph{TimeTracker} database file, and read the
 module-by-module, event-by-event timing information. The returned dataframe
-contains a column "lbl", containing a user-supplied label. The intent is
+contains a column \code{lbl}, containing a user-supplied label. The intent is
 that this label allows many such dataframes, each with a distinct label,
-to be concatenated with `rbind`, and used for comparitive analysis.
+to be concatenated with \code{rbind}, and used for comparitive analysis.
 }
 \examples{
 d1 <- load_module_timing("woof/timing.db", "woof")
