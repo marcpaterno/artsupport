@@ -1,4 +1,4 @@
-#' Load moduline timing information from a _TimeTracker_ database
+#' Load module timing information from a \emph{TimeTracker} database
 #'
 #' Open the specified \emph{TimeTracker} database file, and read the
 #' module-by-module, event-by-event timing information. The returned dataframe

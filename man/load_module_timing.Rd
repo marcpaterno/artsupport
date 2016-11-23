@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{load_module_timing}
 \alias{load_module_timing}
-\title{Load moduline timing information from a _TimeTracker_ database}
+\title{Load module timing information from a \emph{TimeTracker} database}
 \usage{
 load_module_timing(filename, lbl)
 }
