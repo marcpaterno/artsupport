@@ -9,7 +9,7 @@ module_bwplot(data, maxmodules = NULL, ...)
 \arguments{
 \item{data}{The dataframe to plot}
 
-\item{maxmodule}{Plot only the top maxmodules entries from each label}
+\item{maxmodules}{If non-NULL, plot only the top maxmodules entries from each label}
 }
 \value{
 a lattice object, as from bwplot
@@ -17,4 +17,3 @@ a lattice object, as from bwplot
 \description{
 Make a box-and-whisker plot of module times from a timing dataframe.
 }
-
