@@ -4,30 +4,32 @@
 \alias{load_memory_use}
 \title{Load memory use information from a \emph{MemoryTracker} database}
 \usage{
-load_memory_use(filename, tablename, lbl)
+load_memory_use(filename, tablename, lbl = NULL)
 }
 \arguments{
-\item{filename}{THe name of the \emph{MemoryTracker} data file to open.}
+\item{filename}{The name of the \emph{MemoryTracker} data file to open.}
 
 \item{tablename}{The name of the table to be read.}
 
-\item{lbl}{The label to be applied to each row in the dataframe.}
+\item{lbl}{The label to be applied to each row in the dataframe; default is
+NULL.}
 }
 \value{
 a dataframe
 }
 \description{
-Open the specified \emph{MemoryTracker} database file, and read the
-specified table name info a dataframe. The returned dataframe contains
-a column \code{lbl}, containing a user-supplied label. The intent is that
-this label allows many such dataframes, each with a distince label,
-to be concatenated with \code{rbind}, and used for comparitive analysis.
-Consult the \emph{MemoryTracker} documentation for a list of the tables
-that are available.
+Open the specified \emph{MemoryTracker} database file, and read the specified
+table name info a dataframe. If \code{lbl} is non-NULL, the returned
+dataframe will contain a column named \code{lbl}, containing the
+user-supplied label.  The intent is that this label allows many such
+dataframes, each with a distinct label, to be concatenated with
+\code{dplyr::rbind_list} or \code{rbind}, and used for comparitive analysis.
+Consult the \emph{MemoryTracker} documentation for a list of the tables that
+are available.
 }
 \examples{
 d1 <- load_memory_use("woof/memory.db", "ModuleInfo", "woof")
-d2 <- load_memory_use("woof/memory.db", "EventInfo", "woof")
-d3 <- load_memory_use("woof/memory.db", "OtherInfo", "woof")
-d4 <- load_memory_use("woof/memory.db", "PeakUsage", "woof")
+d2 <- load_memory_use("woof/memory.db", "EventInfo")
+d3 <- load_memory_use("woof/memory.db", "OtherInfo")
+d4 <- load_memory_use("woof/memory.db", "PeakUsage")
 }
