@@ -16,10 +16,10 @@
 #' d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 #' d3 = rbind(d1, d2)
 load_module_timing <- function(filename, lbl) {
-  src_sqlite(filename) %>%
-  tbl("TimeModule") %>%
-  tbl_df %>%
-  cbind(lbl)
+  dplyr::src_sqlite(filename) %>%
+  dplyr::tbl("TimeModule") %>%
+  tibble::as_tibble() %>%
+  tibble::add_column(lbl = lbl)
 }
 
 #' Load memory use information from a \emph{MemoryTracker} database
@@ -44,15 +44,15 @@ load_module_timing <- function(filename, lbl) {
 #' d3 <- load_memory_use("woof/memory.db", "OtherInfo", "woof")
 #' d4 <- load_memory_use("woof/memory.db", "PeakUsage", "woof")
 load_memory_use <- function(filename, tablename, lbl) {
-  src_sqlite(filename) %>%
-    tbl(tablename) %>%
-    tbl_df %>%
-    cbind(lbl)
+  dplyr::src_sqlite(filename) %>%
+    dplyr::tbl(tablename) %>%
+    tibble::as_tibble() %>%
+    tibble::add_column(lbl = lbl)
 }
 
 #' Make a box-and-whisker plot of module times from a timing dataframe.
 #'
-#' @param data The dataframe to plot
+#' @param data The dataframe to plot, as from \code{load_module_timing}
 #' @param maxmodules If non-NULL, plot only the top maxmodules entries from each label
 #'
 #' @return a lattice object, as from bwplot

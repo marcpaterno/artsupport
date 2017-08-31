@@ -7,7 +7,7 @@
 module_bwplot(data, maxmodules = NULL, ...)
 }
 \arguments{
-\item{data}{The dataframe to plot}
+\item{data}{The dataframe to plot, as from \code{load_module_timing}}
 
 \item{maxmodules}{If non-NULL, plot only the top maxmodules entries from each label}
 }
