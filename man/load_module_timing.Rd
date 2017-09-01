@@ -4,7 +4,7 @@
 \alias{load_module_timing}
 \title{Load module timing information from a \emph{TimeTracker} database}
 \usage{
-load_module_timing(filename, lbl)
+load_module_timing(filename, lbl = NULL)
 }
 \arguments{
 \item{filename}{The name of the \emph{TimeTracker} database file to open.}

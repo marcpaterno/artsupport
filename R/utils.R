@@ -45,13 +45,8 @@
 #' d1 <- load_module_timing("woof/timing.db", "woof")
 #' d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 #' d3 = rbind(d1, d2)
-load_module_timing <- function(filename, lbl) {
-  t <- dplyr::src_sqlite(filename) %>%
-    dplyr::tbl("TimeModule") %>%
-    tibble::as_tibble()
-  if (!is.null(lbl))
-    tibble::add_column(t, lbl = lbl)
-  t
+load_module_timing <- function(filename, lbl = NULL) {
+  .load_table(filname, lbl)
 }
 
 #' Load memory use information from a \emph{MemoryTracker} database
