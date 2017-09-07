@@ -84,18 +84,31 @@ load_memory_use <- function(filename, tablename, lbl = NULL) {
 #' @return a lattice object, as from bwplot
 #' @export
 module_bwplot <- function(data, maxmodules = NULL, ...) {
-  if (! is.null(maxmodules)) {
-    interesting <- data %>% group_by(lbl,ModuleLabel) %>%
-      summarize(t=median(Time)) %>%
+  if (!is.null(maxmodules)) {
+    interesting <- data %>% group_by(lbl, ModuleLabel) %>%
+      summarize(t = median(Time)) %>%
       top_n(maxmodules) %>%
       getElement("ModuleLabel") %>%
       unique
     data <- subset(data, ModuleLabel %in% interesting)
   }
-  lattice::bwplot(
-    reorder(ModuleLabel, Time) ~ Time | lbl,
-    data = data,
-    scales = list(x = list(log = 10, equispaced = FALSE)),
-    ...
-  )
+  if (is_null_lbl) {
+    lattice::bwplot(
+      reorder(ModuleLabel, Time) ~ Time,
+      data = data,
+      scales = list(x = list(
+        log = 10, equispaced = FALSE
+      )),
+      ...
+    )
+  } else {
+    lattice::bwplot(
+      reorder(ModuleLabel, Time) ~ Time | lbl,
+      data = data,
+      scales = list(x = list(
+        log = 10, equispaced = FALSE
+      )),
+      ...
+    )
+  }
 }
