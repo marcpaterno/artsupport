@@ -18,15 +18,12 @@
 #'
 .load_table <- function(filename, tablename, lbl) {
   con <- DBI::dbConnect(RSQLite::SQLite(), dbname = filename)
-  t <- sqldata %>%
-    dplyr::tbl(tablename) %>%
-    tibble::as_tibble()
+  t <- dplyr::tbl(con, tablename) %>% tibble::as_tibble()
   DBI::dbDisconnect(con)
   if (!is.null(lbl))
     tibble::add_column(t, lbl = lbl)
   t
 }
-
 
 #' Load module timing information from a \emph{TimeTracker} database
 #'
