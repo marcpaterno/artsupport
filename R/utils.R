@@ -17,9 +17,11 @@
 #' d <- .load_table("woof/memory.db", "ModuleInfo", "woof")
 #'
 .load_table <- function(filename, tablename, lbl) {
-  t <- dplyr::src_sqlite(filename) %>%
+  con <- DBI::dbConnect(RSQLite::SQLite(), dbname = filename)
+  t <- sqldata %>%
     dplyr::tbl(tablename) %>%
     tibble::as_tibble()
+  DBI::dbDisconnect(con)
   if (!is.null(lbl))
     tibble::add_column(t, lbl = lbl)
   t
@@ -84,6 +86,7 @@ load_memory_use <- function(filename, tablename, lbl = NULL) {
 #' @return a lattice object, as from bwplot
 #' @export
 module_bwplot <- function(data, maxmodules = NULL, ...) {
+  if ("lbl" %in% names(data))
   if (!is.null(maxmodules)) {
     interesting <- data %>% group_by(lbl, ModuleLabel) %>%
       summarize(t = median(Time)) %>%
@@ -92,7 +95,7 @@ module_bwplot <- function(data, maxmodules = NULL, ...) {
       unique
     data <- subset(data, ModuleLabel %in% interesting)
   }
-  if (is_null_lbl) {
+  if (is_null(lbl)) {
     lattice::bwplot(
       reorder(ModuleLabel, Time) ~ Time,
       data = data,
