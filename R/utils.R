@@ -32,6 +32,17 @@
 }
 
 
+#' memory_db_tables
+#'
+#' @return A character vector containing the names of the tables in the MemoryTracker database.
+#'
+#' @examples
+#'   memory_db_tables()
+#'
+memory_db_tables <- function() {
+  c("ModuleInfo", "EventInfo", "OtherInfo", "PeakUsage")
+}
+
 #----------------------------------------------------------------------------
 # Functions exported for the user
 #----------------------------------------------------------------------------
@@ -84,6 +95,7 @@ load_module_timing <- function(filename, lbl = NULL) {
 #' d4 <- load_memory_use("woof/memory.db", "PeakUsage")
 load_memory_use <- function(filename, tablename, lbl = NULL) {
   .load_table(filename, tablename, lbl)
+  checkmate::assert_choice(tablename, memory_db_tables())
 }
 
 #' Make a box-and-whisker plot of module times from a timing dataframe.
