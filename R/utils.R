@@ -1,3 +1,7 @@
+#----------------------------------------------------------------------------
+# Utility functions, not exported for the user.
+#----------------------------------------------------------------------------
+
 #' Load a table from an SQLite3 database
 #'
 #' Open the specified \emph{MemoryTracker} database file, and read the specified
@@ -24,6 +28,11 @@
     tibble::add_column(t, lbl = lbl)
   t
 }
+
+
+#----------------------------------------------------------------------------
+# Functions exported for the user
+#----------------------------------------------------------------------------
 
 #' Load module timing information from a \emph{TimeTracker} database
 #'
