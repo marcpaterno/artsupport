@@ -22,7 +22,7 @@
 #' d2 <- load_table("mac-memory.db, "ModuleInfo, "mac")
 #' mods <- rbind(d1, d2)
 #'
-.load_table <- function(filename, tablename, lbl) {
+load_table <- function(filename, tablename, lbl) {
   con <- DBI::dbConnect(RSQLite::SQLite(), dbname = filename)
   t <- dplyr::tbl(con, tablename) %>% tibble::as_tibble()
   DBI::dbDisconnect(con)
@@ -67,7 +67,7 @@ memory_db_tables <- function() {
 #' d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 #' d3 = rbind(d1, d2)
 load_module_timing <- function(filename, lbl = NULL) {
-  .load_table(filename, "TimeModule", lbl)
+  load_table(filename, "TimeModule", lbl)
 }
 
 #' Load memory use information from a \emph{MemoryTracker} database
@@ -94,8 +94,8 @@ load_module_timing <- function(filename, lbl = NULL) {
 #' d3 <- load_memory_use("woof/memory.db", "OtherInfo")
 #' d4 <- load_memory_use("woof/memory.db", "PeakUsage")
 load_memory_use <- function(filename, tablename, lbl = NULL) {
-  .load_table(filename, tablename, lbl)
   checkmate::assert_choice(tablename, memory_db_tables())
+  load_table(filename, tablename, lbl)
 }
 
 #' Make a box-and-whisker plot of module times from a timing dataframe.
