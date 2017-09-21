@@ -79,6 +79,7 @@ load_memory_use <- function(filename, tablename, lbl = NULL) {
 #'
 #' @param data The dataframe to plot, as from \code{load_module_timing}
 #' @param maxmodules If non-NULL, plot only the top maxmodules entries from each label
+#' @param ... additional arguments passed to \code{bwplot}
 #'
 #' @return a lattice object, as from bwplot
 #' @export

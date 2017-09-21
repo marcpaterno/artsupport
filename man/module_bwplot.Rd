@@ -10,6 +10,8 @@ module_bwplot(data, maxmodules = NULL, ...)
 \item{data}{The dataframe to plot, as from \code{load_module_timing}}
 
 \item{maxmodules}{If non-NULL, plot only the top maxmodules entries from each label}
+
+\item{...}{additional arguments passed to \code{bwplot}}
 }
 \value{
 a lattice object, as from bwplot

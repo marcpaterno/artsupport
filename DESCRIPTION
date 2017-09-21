@@ -9,8 +9,9 @@ Description: The art framework's TimeTracker and MemoryTracker services can writ
 Depends:
     R (>= 3.3.0),
     dplyr,
-    dbplyr,
-    tidyr,
+    lattice,
+    tibble,
+    DBI,
     RSQLite
 License: LICENSE
 Encoding: UTF-8
