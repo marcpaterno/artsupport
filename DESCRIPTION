@@ -8,11 +8,19 @@ Description: The art framework's TimeTracker and MemoryTracker services can writ
     facilitate analysis of these data.
 Depends:
     R (>= 3.3.0),
+    DBI,
+    RSQLite,
+    checkmate,
     dplyr,
     lattice,
-    tibble,
+    tibble
+Imports:
     DBI,
-    RSQLite
+    RSQLite,
+    dplyr,
+    lattice,
+    stats,
+    tibble
 License: LICENSE
 Encoding: UTF-8
 LazyData: true
