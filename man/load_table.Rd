@@ -7,11 +7,11 @@
 load_table(filename, tablename, lbl)
 }
 \arguments{
-\item{filename}{THe name of the SQLite3 database file to open.}
+\item{filename}{The name of the SQLite3 database file to open.}
 
 \item{tablename}{The name of the table to be read.}
 
-\item{lbl}{The label to be applied to each row in the dataframe.}
+\item{lbl}{Optional, a label to be applied to each row in the dataframe.}
 }
 \value{
 a dataframe
@@ -26,8 +26,9 @@ analysis. Consult the \emph{MemoryTracker} and \emph{TimeTracker}
 documentation for a list of the tables that are available.
 }
 \examples{
+\dontrun{
 d1 <- load_table("woof-memory.db", "ModuleInfo", "woof")
-d2 <- load_table("mac-memory.db, "ModuleInfo, "mac")
+d2 <- load_table("cluck-memory.db", "ModuleInfo", "cluck")
 mods <- rbind(d1, d2)
-
+}
 }

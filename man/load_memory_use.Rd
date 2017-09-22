@@ -28,8 +28,10 @@ Consult the \emph{MemoryTracker} documentation for a list of the tables that
 are available.
 }
 \examples{
+\dontrun{
 d1 <- load_memory_use("woof/memory.db", "ModuleInfo", "woof")
 d2 <- load_memory_use("woof/memory.db", "EventInfo")
 d3 <- load_memory_use("woof/memory.db", "OtherInfo")
 d4 <- load_memory_use("woof/memory.db", "PeakUsage")
+}
 }

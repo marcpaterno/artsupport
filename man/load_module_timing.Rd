@@ -24,7 +24,9 @@ such dataframes, each with a distinct label, to be concatenated with
 \code{dplyr::rbind_list} or \code{rbind}, and used for comparitive analysis.
 }
 \examples{
+\dontrun{
 d1 <- load_module_timing("woof/timing.db", "woof")
 d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 d3 = rbind(d1, d2)
+}
 }

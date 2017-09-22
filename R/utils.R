@@ -12,16 +12,17 @@
 #' analysis. Consult the \emph{MemoryTracker} and \emph{TimeTracker}
 #' documentation for a list of the tables that are available.
 #'
-#' @param filename THe name of the SQLite3 database file to open.
+#' @param filename The name of the SQLite3 database file to open.
 #' @param tablename The name of the table to be read.
-#' @param lbl The label to be applied to each row in the dataframe.
+#' @param lbl Optional, a label to be applied to each row in the dataframe.
 #' @return a dataframe
 #'
 #' @examples
+#' \dontrun{
 #' d1 <- load_table("woof-memory.db", "ModuleInfo", "woof")
-#' d2 <- load_table("mac-memory.db, "ModuleInfo, "mac")
+#' d2 <- load_table("cluck-memory.db", "ModuleInfo", "cluck")
 #' mods <- rbind(d1, d2)
-#'
+#' }
 load_table <- function(filename, tablename, lbl) {
   stopifnot(file.exists(filename))
   con <- DBI::dbConnect(RSQLite::SQLite(), dbname = filename)
@@ -64,9 +65,11 @@ memory_db_tables <- function() {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' d1 <- load_module_timing("woof/timing.db", "woof")
 #' d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 #' d3 = rbind(d1, d2)
+#' }
 load_module_timing <- function(filename, lbl = NULL) {
   load_table(filename, "TimeModule", lbl)
 }
@@ -90,10 +93,12 @@ load_module_timing <- function(filename, lbl = NULL) {
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' d1 <- load_memory_use("woof/memory.db", "ModuleInfo", "woof")
 #' d2 <- load_memory_use("woof/memory.db", "EventInfo")
 #' d3 <- load_memory_use("woof/memory.db", "OtherInfo")
 #' d4 <- load_memory_use("woof/memory.db", "PeakUsage")
+#' }
 load_memory_use <- function(filename, tablename, lbl = NULL) {
   checkmate::assert_choice(tablename, memory_db_tables())
   load_table(filename, tablename, lbl)
