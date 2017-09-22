@@ -23,12 +23,13 @@
 #' mods <- rbind(d1, d2)
 #'
 load_table <- function(filename, tablename, lbl) {
+  stopifnot(file.exists(filename))
   con <- DBI::dbConnect(RSQLite::SQLite(), dbname = filename)
-  t <- dplyr::tbl(con, tablename) %>% tibble::as_tibble()
+  tmp <- dplyr::tbl(con, tablename) %>% tibble::as_tibble()
   DBI::dbDisconnect(con)
   if (!is.null(lbl))
-    tibble::add_column(t, lbl = lbl)
-  t
+    tmp <- tibble::add_column(tmp, lbl = lbl)
+  tmp
 }
 
 
