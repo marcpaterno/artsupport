@@ -30,9 +30,10 @@ load_table <- function(filename, tablename, lbl) {
   DBI::dbDisconnect(con)
   if (!is.null(lbl))
     tmp <- tibble::add_column(tmp, lbl = lbl)
+  nr <- nrow(tmp)
+  tmp <- tibble::add_column(tmp, sample = 1:nr)
   tmp
 }
-
 
 #' memory_db_tables
 #'
@@ -102,6 +103,35 @@ load_module_timing <- function(filename, lbl = NULL) {
 load_memory_use <- function(filename, tablename, lbl = NULL) {
   checkmate::assert_choice(tablename, memory_db_tables())
   load_table(filename, tablename, lbl)
+}
+
+#' Load event-by-event memory use information from a MemoryTracker database
+#'
+#' @param filename The name of the \emph{MemoryTracker} data file top open.
+#' @param lbl  The label to be applied to each row in the dataframe;default is NULL.
+#'
+#' @return a dataframe, with one row per event
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' events <- load_event_memory_use("memory.db")
+#' }
+load_event_memory_use <- function(filename, lbl = NULL) {
+  tmp <- load_memory_use(filename, "EventInfo", lbl)
+  vsz <- tmp %>%
+    dplyr::select(-c(RSS, sample)) %>%
+    tidyr::spread(Step, Vsize) %>%
+    mutate(DeltaVsize = PostProcessEvent - PreProcessEvent) %>%
+    dplyr::rename(PreVsize = PreProcessEvent, PostVsize = PostProcessEvent)
+  rss <- tmp %>%
+    dplyr::select(-c(Vsize, sample)) %>%
+    tidyr::spread(Step, RSS) %>%
+    mutate(DeltaRSS = PostProcessEvent - PreProcessEvent) %>%
+    dplyr::rename(PreRSS = PreProcessEvent, PostRSS = PostProcessEvent)
+  tmp <- dplyr::inner_join(rss,vsz)
+  nr <- nrow(tmp)
+  tmp %>% mutate(sample = 1:nr)
 }
 
 #' Make a box-and-whisker plot of module times from a timing dataframe.

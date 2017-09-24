@@ -5,6 +5,8 @@ test_that("load_module_timing returns a correct tbl_df without label", {
   tmp <- load_module_timing("timeTracker.db")
   expect_is(tmp, "tbl_df")
   expect_false("lbl" %in% names(tmp))
+  nr <- nrow(tmp)
+  expect_equal(tmp$sample, 1:nr)
   })
 
 test_that("load_module_testing returns a correct tbl_df with label", {
@@ -12,4 +14,6 @@ test_that("load_module_testing returns a correct tbl_df with label", {
   expect_is(tmp, "tbl_df")
   expect_true("lbl" %in% names(tmp))
   expect_true(all(tmp$lbl == "foo"))
+  nr <- nrow(tmp)
+  expect_equal(tmp$sample, 1:nr)
 })
