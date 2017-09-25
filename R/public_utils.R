@@ -29,7 +29,7 @@ memory_db_tables <- function() {
 count_events <- function(data) {
   checkmate::check_subset(data, c("Run", "SubRun", "Event"))
   if ("lbl" %in% names(data))
-    nrow(distinct(data, .data$Run, .data$SubRun, .data$Event, .data$lbl))
+    nrow(dplyr::distinct(data, .data$Run, .data$SubRun, .data$Event, .data$lbl))
   else
-    nrow(distinct(data, .data$Run, .data$SubRun, .data$Event))
+    nrow(dplyr::distinct(data, .data$Run, .data$SubRun, .data$Event))
 }
