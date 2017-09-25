@@ -1,6 +1,12 @@
 library(artsupport)
 context("load_module_timing")
 
+test_that("load_module_timing returns an empty tbl_df when called on a file with no samples", {
+  tmp <- load_module_timing("timing-empty.db")
+  expect_is(tmp, "tbl_df")
+  expect_equal(nrow(tmp), 0)
+})
+
 test_that("load_module_timing returns a correct tbl_df without label", {
   tmp <- load_module_timing("timeTracker.db")
   expect_is(tmp, "tbl_df")

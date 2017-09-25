@@ -1,6 +1,6 @@
 Package: artsupport
 Title: Analysis of art Program Performance Data
-Version: 0.0.0.9009
+Version: 0.0.0.9010
 Authors@R: person("Marc", "Paterno", email = "paterno@fnal.gov", role = c("aut", "cre"))
 Description: The art framework's TimeTracker and MemoryTracker services can write
     SQLite databases containing event-by-event and module-by-module
