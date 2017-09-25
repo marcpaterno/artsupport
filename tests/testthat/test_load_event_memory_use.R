@@ -8,7 +8,7 @@ test_that("load_event_memory_use returns a correct tbl_df without label", {
   expect_equal(tmp$sample, 1:nr)
   expect_named(tmp,
                c("Run", "SubRun", "Event", "PostRSS", "PreRSS", "DeltaRSS",
-                 "PostVsize","PreVsize","DeltaVsize", "sample"),
+                 "PostVsize", "PreVsize", "DeltaVsize", "sample"),
                ignore.order = TRUE)
 })
 
@@ -19,7 +19,7 @@ test_that("load_event_memory_use returns a correct tbl_df with label", {
   expect_equal(tmp$sample, 1:nr)
   expect_named(tmp,
                c("Run", "SubRun", "Event", "PostRSS", "PreRSS", "DeltaRSS",
-                 "PostVsize","PreVsize","DeltaVsize", "sample", "lbl"),
+                 "PostVsize", "PreVsize", "DeltaVsize", "sample", "lbl"),
                ignore.order = TRUE)
   expect_true(all(tmp$lbl == "foo"))
 })

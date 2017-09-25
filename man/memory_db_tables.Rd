@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{memory_db_tables}
 \alias{memory_db_tables}
-\title{memory_db_tables}
+\title{Names of tables in a _MemoryTracker_ database.}
 \usage{
 memory_db_tables()
 }
@@ -10,9 +10,9 @@ memory_db_tables()
 A character vector containing the names of the tables in the MemoryTracker database.
 }
 \description{
-memory_db_tables
+Names of tables in a _MemoryTracker_ database.
 }
 \examples{
+  library(artsupport)
   memory_db_tables()
-
 }

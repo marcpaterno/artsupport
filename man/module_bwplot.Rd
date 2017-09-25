@@ -4,7 +4,7 @@
 \alias{module_bwplot}
 \title{Make a box-and-whisker plot of module times from a timing dataframe.}
 \usage{
-module_bwplot(data, maxmodules = NULL, ...)
+module_bwplot(data, maxmodules = NA, ...)
 }
 \arguments{
 \item{data}{The dataframe to plot, as from \code{load_module_timing}}
