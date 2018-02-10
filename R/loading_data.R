@@ -28,6 +28,56 @@ load_module_timing <- function(filename, lbl = NULL) {
   load_table(filename, "TimeModule", lbl)
 }
 
+#' Load event timing information from a \emph{TimeTracker} database
+#'
+#' Open the specified \emph{TimeTracker} database file, and read the
+#' event-by-event timing information. If \code{lbl} is
+#' non-NULL, the returned dataframe will contain a column named \code{lbl},
+#' containing the user-supplied label. The intent is that this label allows many
+#' such dataframes, each with a distinct label, to be concatenated with
+#' \code{dplyr::rbind_list} or \code{rbind}, and used for comparitive analysis.
+#'
+#' @param filename The name of the \emph{TimeTracker} database file to open.
+#' @param lbl The label to be applied to each row in the dataframe. Default is
+#'   NULL, in which cade no label is added.
+#' @return a dataframe
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' d1 <- load_event_timing("woof/timing.db", "woof")
+#' d2 <- load_event_timing("lsd6/timing.db", "lsd6")
+#' d3 = rbind(d1, d2)
+#' }
+load_event_timing <- function(filename, lbl = NULL) {
+  load_table(filename, "TimeEvent", lbl)
+}
+
+#' Load source timing information from a \emph{TimeTracker} database
+#'
+#' Open the specified \emph{TimeTracker} database file, and read the
+#' event-by-event timing information for the source. If \code{lbl} is
+#' non-NULL, the returned dataframe will contain a column named \code{lbl},
+#' containing the user-supplied label. The intent is that this label allows many
+#' such dataframes, each with a distinct label, to be concatenated with
+#' \code{dplyr::rbind_list} or \code{rbind}, and used for comparitive analysis.
+#'
+#' @param filename The name of the \emph{TimeTracker} database file to open.
+#' @param lbl The label to be applied to each row in the dataframe. Default is
+#'   NULL, in which cade no label is added.
+#' @return a dataframe
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' d1 <- load_source_timing("woof/timing.db", "woof")
+#' d2 <- load_source_timing("lsd6/timing.db", "lsd6")
+#' d3 = rbind(d1, d2)
+#' }
+load_source_timing <- function(filename, lbl = NULL) {
+  load_table(filename, "TimeSource", lbl)
+}
+
 #' Load memory use information from a \emph{MemoryTracker} database
 #'
 #' Open the specified \emph{MemoryTracker} database file, and read the specified
