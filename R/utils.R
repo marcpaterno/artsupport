@@ -38,3 +38,15 @@ load_table <- function(filename, tablename, lbl) {
   if (nr == 0) tibble::add_column(tmp, sample = 0)
   else         tibble::add_column(tmp, sample = 1:nr)
 }
+
+
+#' Pad numbers with zeros
+#'
+#' @param num The number to pad
+#'
+#' @return A string with the number padded
+#'
+padNum <- function(num) {
+  stringr::str_pad(num, width=8, side="left", pad="0")
+}
+
