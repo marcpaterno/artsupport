@@ -140,3 +140,38 @@ load_event_memory_use <- function(filename, lbl = NULL) {
   nr <- nrow(tmp)
   tmp %>% dplyr::mutate(sample = 1:nr)
 }
+
+#' Load event-by-event module level memory use information
+#'
+#' @param filename The name of the \emph{MemoryTracker} data file top open.
+#'
+#' @return a dataframe, with one row per module per event
+#' @export
+#' @importFrom magrittr "%>%"
+#'
+#' @examples
+#' \dontrun{}
+#' moduleMemUsage <- load_module_memory_use("memory.db")
+#' }
+load_module_memory_use <- function(filename) {
+  tmp <- load_memory_use(filename, "ModuleInfo")
+  # Collapse some of the columns
+  tmpS <- tmp %>%
+    dplyr::transmute(event=paste(padNum(Run), padNum(SubRun), padNum(Event), sep="/"),
+              module=paste(stringr::str_remove(Step, '^(Pre|Post)'), Path, ModuleLabel, ModuleType, sep='/'),
+              rss=RSS,
+              prepost=paste0(stringr::str_extract(Step, "^(Pre|Post)"), "RSS")
+  )
+
+  # Check for consistiency
+  preKeys =  tmpS %>% dplyr::filter(prepost=='PreRSS')  %>% dplyr::transmute(k=paste(event, module)) %>% dplyr::pull()
+  postKeys = tmpS %>% dplyr::filter(prepost=='PostRSS') %>% dplyr::transmute(k=paste(event, module)) %>% dplyr::pull()
+  all(preKeys == postKeys) %>% assertthat::assert_that(msg="Pre and Post rows do not alternate!")
+
+  # Spread the dataframe pre/post and mark the runs that are root related
+  tmpSpread <- tidyr::spread(tmpS, prepost, rss) %>% dplyr::mutate(deltaRSS=PostRSS-PreRSS,
+                                                     isRootOut = stringr::str_detect(module, "RootOutput"))
+  tmpSpread$sample <- 1:nrow(tmpSpread)
+
+  tmpSpread
+}
