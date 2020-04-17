@@ -1,6 +1,6 @@
 Package: artsupport
 Title: Analysis of art Program Performance Data
-Version: 0.0.0.9014
+Version: 0.0.0.9015
 Authors@R: person("Marc", "Paterno", email = "paterno@fnal.gov", role = c("aut", "cre"))
 Description: The art framework's TimeTracker and MemoryTracker services can write
     SQLite databases containing event-by-event and module-by-module
@@ -14,10 +14,9 @@ Imports:
     checkmate (>= 2.0.0),
     dbplyr (>= 1.4.2),
     dplyr (>= 0.8.5),
-    lattice (>= 0.20.41),
+    lattice (>= 0.20-41),
     magrittr (>= 1.5),
     rlang (>= 0.4.5),
-    stats (>= 3.6.3),
     tibble (>= 3.0.0),
     tidyr (>= 1.0.2)
 Suggests:
