@@ -26,7 +26,7 @@ load_module_timing <- function(filename, lbl = NULL) {
   modules <- load_table(filename, "TimeModule", lbl)
   if (nrow(modules) == 0) return(tibble::add_column(modules, sample = 0))
   by_module <- modules %>%
-    dplyr::group_by(.data$Path, .data$ModuleLabel) %>%
+    dplyr::group_by(.data$Path, .data$ModuleLabel, .data$ModuleType) %>%
     dplyr::summarize(n = dplyr::n())
   n_events <- dplyr::pull(by_module, "n")
   checkmate::assert_set_equal(n_events,
