@@ -1,28 +1,29 @@
 Package: artsupport
 Title: Analysis of art Program Performance Data
-Version: 0.0.0.9011
+Version: 0.0.0.9012
 Authors@R: person("Marc", "Paterno", email = "paterno@fnal.gov", role = c("aut", "cre"))
 Description: The art framework's TimeTracker and MemoryTracker services can write
     SQLite databases containing event-by-event and module-by-module
     execution times and memory usage. The artsupport package provides functions to
     facilitate analysis of these data.
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.6.0)
 Imports:
-    DBI,
-    RSQLite,
-    checkmate,
-    dplyr,
-    lattice,
-    magrittr,
-    rlang,
-    stats,
-    tibble,
-    tidyr
+    DBI (>= 1.1.0),
+    RSQLite (>= 2.2.0),
+    checkmate (>= 2.0.0),
+    dbplyr (>= 1.4.2),
+    dplyr (>= 0.8.99.9002),
+    lattice (>= 0.20.41),
+    magrittr (>= 1.5),
+    rlang (>= 0.4.5.9000),
+    stats (>= 3.6.3),
+    tibble (>= 3.0.0),
+    tidyr (>= 1.0.2)
 Suggests:
     testthat
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0
 URL: https://github.com/marcpaterno/artsupport

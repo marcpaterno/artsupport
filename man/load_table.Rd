@@ -4,7 +4,7 @@
 \alias{load_table}
 \title{Load a table from an SQLite3 database}
 \usage{
-load_table(filename, tablename, lbl)
+load_table(filename, tablename, lbl = NULL)
 }
 \arguments{
 \item{filename}{The name of the SQLite3 database file to open.}

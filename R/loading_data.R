@@ -1,6 +1,4 @@
-#----------------------------------------------------------------------------
-# Functions for loading data, exported for the user.
-#----------------------------------------------------------------------------
+#' Functions for loading data.
 
 
 #' Load module timing information from a \emph{TimeTracker} database
@@ -25,7 +23,16 @@
 #' d3 = rbind(d1, d2)
 #' }
 load_module_timing <- function(filename, lbl = NULL) {
-  load_table(filename, "TimeModule", lbl)
+  modules <- load_table(filename, "TimeModule", lbl)
+  if (nrow(modules) == 0) return(tibble::add_column(modules, sample = 0))
+  by_module <- modules %>%
+    dplyr::group_by(.data$Path, .data$ModuleLabel) %>%
+    dplyr::summarize(n = dplyr::n())
+  n_events <- dplyr::pull(by_module, "n")
+  checkmate::assert_set_equal(n_events,
+                              n_events[[1]])
+  n_modules <- nrow(by_module)
+  dplyr::mutate(modules, sample = rep(1:n_events[[1]], each = n_modules))
 }
 
 #' Load event timing information from a \emph{TimeTracker} database
@@ -50,7 +57,8 @@ load_module_timing <- function(filename, lbl = NULL) {
 #' d3 = rbind(d1, d2)
 #' }
 load_event_timing <- function(filename, lbl = NULL) {
-  load_table(filename, "TimeEvent", lbl)
+  load_table(filename, "TimeEvent", lbl) %>%
+    dplyr::mutate(sample = dplyr::row_number())
 }
 
 #' Load source timing information from a \emph{TimeTracker} database
@@ -75,7 +83,8 @@ load_event_timing <- function(filename, lbl = NULL) {
 #' d3 = rbind(d1, d2)
 #' }
 load_source_timing <- function(filename, lbl = NULL) {
-  load_table(filename, "TimeSource", lbl)
+  dplyr::mutate(load_table(filename, "TimeSource", lbl),
+         sample = dplyr::row_number())
 }
 
 #' Load memory use information from a \emph{MemoryTracker} database
@@ -123,16 +132,18 @@ load_memory_use <- function(filename, tablename, lbl = NULL) {
 #' events <- load_event_memory_use("memory.db")
 #' }
 load_event_memory_use <- function(filename, lbl = NULL) {
+  checkmate::assert_scalar(filename)
+  checkmate::assert_file_exists(filename)
   tmp <- load_memory_use(filename, "EventInfo", lbl)
   vsz <- tmp %>%
-    dplyr::select(-c(.data$RSS, .data$sample)) %>%
+    dplyr::select(-c(.data$RSS)) %>%
     tidyr::spread(.data$Step, .data$Vsize) %>%
     dplyr::mutate(DeltaVsize =
                     .data$PostProcessEvent - .data$PreProcessEvent) %>%
     dplyr::rename(PreVsize =
                     .data$PreProcessEvent, PostVsize = .data$PostProcessEvent)
   rss <- tmp %>%
-    dplyr::select(-c(.data$Vsize, .data$sample)) %>%
+    dplyr::select(-c(.data$Vsize)) %>%
     tidyr::spread(.data$Step, .data$RSS) %>%
     dplyr::mutate(DeltaRSS = .data$PostProcessEvent - .data$PreProcessEvent) %>%
     dplyr::rename(PreRSS = .data$PreProcessEvent, PostRSS = .data$PostProcessEvent)

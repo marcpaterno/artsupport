@@ -1,4 +1,3 @@
-library(artsupport)
 context("load_event_timing")
 
 test_that("load_event_timing returns an empty tbl_df when called on a file with no samples", {

@@ -24,17 +24,12 @@
 #' d2 <- load_table("cluck-memory.db", "ModuleInfo", "cluck")
 #' mods <- rbind(d1, d2)
 #' }
-load_table <- function(filename, tablename, lbl) {
-  stopifnot(file.exists(filename))
+load_table <- function(filename, tablename, lbl = NULL) {
+  checkmate::assert_scalar(filename)
+  checkmate::assert_file_exists(filename)
   con <- DBI::dbConnect(RSQLite::SQLite(), dbname = filename)
   tmp <- dplyr::tbl(con, tablename) %>% tibble::as_tibble()
   DBI::dbDisconnect(con)
-  if (!is.null(lbl))
-    tmp <- tibble::add_column(tmp, lbl = lbl)
-  nr <- nrow(tmp)
-  # If there are no entries in the table, the addition of the 'sample' column is
-  # different than in the normal case. The value chosen in this case is
-  # arbitrary; is just has to be a 1d atomic vector.
-  if (nr == 0) tibble::add_column(tmp, sample = 0)
-  else         tibble::add_column(tmp, sample = 1:nr)
+  if (!is.null(lbl)) tmp <- tibble::add_column(tmp, lbl = lbl)
+  tmp
 }
