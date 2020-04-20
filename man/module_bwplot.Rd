@@ -4,14 +4,16 @@
 \alias{module_bwplot}
 \title{Make a box-and-whisker plot of module times from a timing dataframe.}
 \usage{
-module_bwplot(data, n = NA, ...)
+module_bwplot(data, n = NULL, use_log = FALSE, ...)
 }
 \arguments{
 \item{data}{The dataframe to plot, as from \code{load_module_timing}}
 
 \item{n}{If non-NULL, plot only the top \code{n} entries from each label}
 
-\item{...}{additional arguments passed to \code{bwplot}}
+\item{use_log}{if TRUE, a log scale is used for the $x$ axis}
+
+\item{...}{additional arguments passed to \code{geom_boxplot}}
 }
 \value{
 a lattice object, as from bwplot
