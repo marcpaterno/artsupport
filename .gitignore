@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 artsupport.Rcheck/
+inst/doc
+doc
+Meta

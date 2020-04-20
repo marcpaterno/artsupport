@@ -1,0 +1,91 @@
+---
+title: "Analyzing TimeTracker output from art"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analyzing TimeTracker output from art}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message = FALSE}
+library(dplyr)
+library(artsupport)
+```
+
+# Overview
+
+The _art_ [`TimeTracker`](https://cdcvs.fnal.gov/redmine/projects/art/wiki/TimeTracker)
+service records a variety of timing information in a running _art_ framework program,
+and optionally writes that data to an [SQLite](https://sqlite.org) database.
+
+These databases contain three tables:
+
+1. *TimeEvent*, which has one record per event, giving the processing time of the event *except* for writing output;
+2. *TimeSource*, which has one one record per event, giving the name and execution time of the source; and
+3. *TimeModule*, which has one record per module per event, giving the identity of the module and its execution time on each event.
+
+We'll be looking at a small database produced by running an ICARUS simulation program.
+
+```{r}
+dbfile <- here::here("tests/testthat/timing-with-output-module.db")
+```
+
+# Event timing data
+
+# Source timing data
+
+Source timing data can be loaded using `load_source_timing`:
+```{r}
+sources <- load_source_timing(dbfile)
+sources
+```
+
+
+It is important to note that `RootInput`, the source used to read _art_/Root files,
+is designed to support delayed loading of data products.
+This means that `RootInput` only reads a small amount of metadata for each event,
+and thus it appears very fast.
+The actual reading of a data product is delayed until the first request for that data product is made by a module.
+If you want to determine the time taken to read the input, you can set the configuration to do so:
+```
+source.delayedReadEventProducts: false
+```
+But note that this may cause a degradation in the oveall processing speed of the program.
+
+# Module timing data
+
+Module timing data can be loaded using `load_module_timing`:
+
+```{r}
+modules <- load_module_timing(dbfile)
+modules
+```
+
+The *source* module is not included in the `TimeModule` table.
+If you want to include source in the data read by `load_module_timing`, set the parameter `include_source = TRUE`:
+
+```{r}
+all_modules <- load_module_timing(dbfile, include_source = TRUE)
+```
+
+
+
+The `TimeTracker` records two values on each event for output modules;
+they are distinguished by one having the suffix `(write)` in the `ModuleType` column.
+
+```{r}
+modules %>% filter(Path == "end_path")
+```
+
+The record without the `(write)` suffix contains the time taken by the event-processing function of the output module.
+This does *not* include the time actually taken to write to the output.
+In includes things like the running of a `ResultsProducer`, which happens in the context of an output module.
+The record with the `(write)` suffix is the time taken to write the output.
+

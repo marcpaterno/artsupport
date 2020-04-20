@@ -1,6 +1,5 @@
 #' Functions for loading data.
 
-
 #' Load module timing information from a \emph{TimeTracker} database
 #'
 #' Open the specified \emph{TimeTracker} database file, and read the
@@ -8,11 +7,11 @@
 #' non-NULL, the returned dataframe will contain a column named \code{lbl},
 #' containing the user-supplied label. The intent is that this label allows many
 #' such dataframes, each with a distinct label, to be concatenated with
-#' \code{dplyr::rbind_list} or \code{rbind}, and used for comparitive analysis.
+#' \code{dplyr::rbind_rows} or \code{rbind}, and used for comparitive analysis.
 #'
 #' @param filename The name of the \emph{TimeTracker} database file to open.
-#' @param lbl The label to be applied to each row in the dataframe. Default is
-#'   NULL, in which cade no label is added.
+#' @param lbl The label to be applied to each row in the dataframe. Default is  NULL, in which cade no label is added.
+#' @param include_source if TRUE, the timing for the source module is included
 #' @return a dataframe
 #' @export
 #'
@@ -22,9 +21,10 @@
 #' d2 <- load_module_timing("lsd6/timing.db", "lsd6")
 #' d3 = rbind(d1, d2)
 #' }
-load_module_timing <- function(filename, lbl = NULL) {
+load_module_timing <- function(filename, lbl = NULL, include_source = FALSE) {
   modules <- load_table(filename, "TimeModule", lbl)
   if (nrow(modules) == 0) return(tibble::add_column(modules, sample = 0))
+
   by_module <- modules %>%
     dplyr::group_by(.data$Path, .data$ModuleLabel, .data$ModuleType) %>%
     dplyr::summarize(n = dplyr::n())
@@ -32,7 +32,15 @@ load_module_timing <- function(filename, lbl = NULL) {
   checkmate::assert_set_equal(n_events,
                               n_events[[1]])
   n_modules <- nrow(by_module)
-  dplyr::mutate(modules, sample = rep(1:n_events[[1]], each = n_modules))
+  modules <- dplyr::mutate(modules, sample = rep(1:n_events[[1]], each = n_modules))
+
+  if (isTRUE(include_source)) {
+    sources <- load_source_timing(filename)
+    sources <- dplyr::mutate(sources, Path = "[art]", ModuleLabel = "source", ModuleType = .data$Source)
+    sources <- dplyr::select(sources, -c("Source"))
+    modules <- dplyr::bind_rows(sources, modules) %>% dplyr::arrange(sample)
+  }
+  modules
 }
 
 #' Load event timing information from a \emph{TimeTracker} database
